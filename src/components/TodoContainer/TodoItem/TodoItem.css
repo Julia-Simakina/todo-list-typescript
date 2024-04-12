@@ -1,0 +1,47 @@
+.item {
+  display: flex;
+  position: relative;
+  font-size: 22px;
+  border-bottom: 1px solid #ededed;
+  max-width: 550px;
+  padding: 15px 15px 15px 60px;
+  min-height: 35px;
+}
+
+.item__checkbox {
+  bottom: 0;
+  top: 0;
+  left: 20px;
+  margin: auto 0;
+  position: absolute;
+  width: 23px;
+}
+
+.item__description {
+  max-width: 450px;
+  min-width: 400px;
+  word-break: break-all;
+  border: none;
+  font-size: inherit;
+  align-self: center;
+}
+
+.item__description_checked {
+  text-decoration: line-through;
+  color: rgb(156, 156, 156);
+}
+
+.item__delete-btn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 20px;
+  font-size: 25px;
+  line-height: 26px;
+  font-weight: 600;
+  color: #cfcfcf;
+}
+
+.item__delete-btn:hover {
+  color: #db0000;
+}

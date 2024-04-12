@@ -1,0 +1,13 @@
+.button_filter {
+  padding: 3px 7px;
+}
+
+.button_filter_active {
+  border-radius: 3px;
+  outline: 2px solid rgb(55, 0, 255);
+}
+
+.button_filter:hover {
+  border-radius: 3px;
+  outline: 2px solid rgb(55, 0, 255);
+}

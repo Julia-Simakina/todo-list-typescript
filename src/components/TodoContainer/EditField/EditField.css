@@ -1,0 +1,13 @@
+.edit-field {
+  width: 450px;
+  border: none;
+  font: inherit;
+  font-size: 24px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ededed;
+}
+
+.edit-field:focus {
+  outline: 2px solid rgb(55, 0, 255);
+  border-radius: 3px;
+}

@@ -1,0 +1,23 @@
+.todo-input {
+  width: inherit;
+  border: none;
+  padding: 15px 15px 15px 60px;
+  font-size: 22px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ededed;
+}
+
+.todo-input::placeholder {
+  font-style: italic;
+}
+
+.todo-input:focus {
+  outline: 2px solid rgb(55, 0, 255);
+  border-radius: 3px;
+}
+
+.all-completed {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
