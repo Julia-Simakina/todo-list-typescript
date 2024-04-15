@@ -1,21 +1,17 @@
-import "./TodoItem.css";
-import { useDispatch } from "react-redux";
-import {
-  removeTodo,
-  toggleTodo,
-  editTodo,
-} from "../../../store/todosSlice/todosSlice";
-import { useState } from "react";
-import EditField from "../EditField/EditField";
-import { Todo } from "../../../types/types";
+import './TodoItem.css';
+import { useDispatch } from 'react-redux';
+import { removeTodo, toggleTodo, editTodo } from '../../../store/todosSlice/todosSlice';
+import { useState } from 'react';
+import EditField from '../EditField/EditField';
+import { Todo } from '../../../types/types';
 
 interface IProps {
   todo: Todo;
 }
 
-const TodoItem: React.FC<IProps> = (props) => {
+const TodoItem: React.FC<IProps> = props => {
   const [editId, setEditId] = useState<number | null>(null);
-  const [editText, setEditText] = useState<string>("");
+  const [editText, setEditText] = useState<string>('');
 
   const dispatch = useDispatch();
 
@@ -29,11 +25,11 @@ const TodoItem: React.FC<IProps> = (props) => {
 
   const handleEditTodo = () => {
     if (!editText.trim()) {
-      setEditText("");
+      setEditText('');
     } else {
-      dispatch(editTodo(editId as number, editText));
+      dispatch(editTodo({ id: editId as number, newText: editText }));
       setEditId(null);
-      setEditText("");
+      setEditText('');
     }
   };
 
@@ -42,10 +38,10 @@ const TodoItem: React.FC<IProps> = (props) => {
   };
 
   const checkEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       return handleExit();
     }
-    if (e.key !== "Enter") return;
+    if (e.key !== 'Enter') return;
 
     handleEditTodo();
   };
@@ -56,19 +52,17 @@ const TodoItem: React.FC<IProps> = (props) => {
   };
 
   return (
-    <li className="todo-list__item item" id={props.todo.id?.toString()}>
+    <li className='todo-list__item item' id={props.todo.id?.toString()}>
       {!editId ? (
         <>
           <input
-            type="checkbox"
-            className="item__checkbox"
+            type='checkbox'
+            className='item__checkbox'
             onChange={handleCheckboxChange}
             checked={props.todo.completed}
           />
           <label
-            className={`item__description ${
-              props.todo.completed && "item__description_checked"
-            }`}
+            className={`item__description ${props.todo.completed && 'item__description_checked'}`}
             onDoubleClick={() => {
               setEditId(props.todo.id);
               setEditText(props.todo.text);
@@ -76,10 +70,7 @@ const TodoItem: React.FC<IProps> = (props) => {
           >
             {props.todo.text}
           </label>
-          <button
-            className="button item__delete-btn"
-            onClick={handleRemoveTodo}
-          >
+          <button className='button item__delete-btn' onClick={handleRemoveTodo}>
             ×
           </button>
         </>
