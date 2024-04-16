@@ -1,12 +1,12 @@
 import "./FilterButton.css";
 
-interface FilterButtonProps {
+type FilterButtonPropsType = {
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   name: string;
   isActive: boolean;
 }
 
-const FilterButton: React.FC<FilterButtonProps> = (props) => {
+const FilterButton: React.FC<FilterButtonPropsType> = (props) => {
   return (
     <li>
       <button

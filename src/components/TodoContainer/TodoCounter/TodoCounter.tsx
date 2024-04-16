@@ -1,9 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { filteredTodosSelector } from "../../../store/selectors/selectors";
+import { useAppSelector } from "../../../store/store";
 
 const TodoCounter = React.memo(() => {
-  const { activeTodosCount } = useSelector(filteredTodosSelector);
+  const { activeTodosCount } = useAppSelector(filteredTodosSelector);
 
   return (
     <span>

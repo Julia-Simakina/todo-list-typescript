@@ -1,12 +1,15 @@
 import { createSelector } from "reselect";
-import { SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED } from "../actions/actionNames";
-export const getTodos = (state) => state.todos.todoList;
-export const getVisibilityFilter = (state) => state.todos.currentFilter;
+import { RootState } from "../store";
+import { FilterValueEnum, ITodo } from "../../types/types";
+
+export const getTodos = (state: RootState) => state.todos.todoList;
+export const getVisibilityFilter = (state: RootState) =>
+  state.todos.currentFilter;
 
 export const filteredTodosSelector = createSelector(
   [getTodos, getVisibilityFilter],
   (todos, visibilityFilter) => {
-    let filteredTodos = [];
+    let filteredTodos: ITodo[] = [];
 
     let activeTodosCount = 0;
 
@@ -20,18 +23,18 @@ export const filteredTodosSelector = createSelector(
       }
 
       switch (visibilityFilter) {
-        case SHOW_COMPLETED:
+        case FilterValueEnum.SHOW_COMPLETED:
           if (todo.completed) {
             filteredTodos.push(todo);
           }
           break;
-        case SHOW_ACTIVE:
+        case FilterValueEnum.SHOW_ACTIVE:
           if (!todo.completed) {
             activeTodosCount++;
             filteredTodos.push(todo);
           }
           break;
-        case SHOW_ALL:
+        case FilterValueEnum.SHOW_ALL:
         default:
           filteredTodos.push(todo);
           if (!todo.completed) {

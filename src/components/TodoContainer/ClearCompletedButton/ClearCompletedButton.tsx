@@ -1,10 +1,10 @@
 import "./ClearCompletedButton.css";
 
-type ClearCompletedButtonProps = {
+type ClearCompletedButtonPropsType = {
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
-const ClearCompletedButton: React.FC<ClearCompletedButtonProps> = (props) => {
+const ClearCompletedButton: React.FC<ClearCompletedButtonPropsType> = (props) => {
   return (
     <button className="button button_clear" onClick={props.onClick}>
       Clear completed

@@ -1,19 +1,19 @@
 import "./AddTodo.css";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// import { addTodo, toggleAllTodo } from "../../../store/actions/actions";
+import { useAppSelector, useAppDispatch } from "../../../store/store";
 import { filteredTodosSelector } from "../../../store/selectors/selectors";
 import { addTodo, toggleAllTodo } from "../../../store/todosSlice/todosSlice";
+import { ITodo } from "../../../types/types";
 
-const AddTodo = () => {
-  const { filteredTodos, isAllCompletedChecked } = useSelector(
+const AddTodo: React.FC = () => {
+  const { filteredTodos, isAllCompletedChecked } = useAppSelector(
     filteredTodosSelector
   );
 
-  const [text, setText] = useState(""); //текст инпута
-  const dispatch = useDispatch();
+  const [text, setText] = useState(""); 
+  const dispatch = useAppDispatch();
 
-  const addNewTodo = (newTodo) => {
+  const addNewTodo = (newTodo: ITodo) => {
     dispatch(addTodo(newTodo));
   };
 
@@ -21,7 +21,10 @@ const AddTodo = () => {
     dispatch(toggleAllTodo());
   };
 
-  const createTodo = (text, completed = false) => {
+  const createTodo = (
+    text: ITodo["text"],
+    completed: ITodo["completed"] = false
+  ): ITodo => {
     return {
       id: Date.now(),
       text,
@@ -29,8 +32,8 @@ const AddTodo = () => {
     };
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter" && text.trim()) {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && text.trim()) {
       const newTodo = createTodo(text);
       addNewTodo(newTodo);
       setText("");

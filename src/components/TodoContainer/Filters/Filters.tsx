@@ -1,6 +1,5 @@
 import "./Filters.css";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   removeCompletedTodo,
   setVisibilityFilter,
@@ -9,11 +8,13 @@ import { filterButtons } from "../../../utils/constants";
 import FilterButton from "../FilterButton/FilterButton";
 import TodoCounter from "../TodoCounter/TodoCounter";
 import ClearCompletedButton from "../ClearCompletedButton/ClearCompletedButton";
+import { useAppSelector, useAppDispatch } from "../../../store/store";
+import { IFilterButton } from "../../../types/types";
 
-const Filters = () => {
-  const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todos.todoList);
-  const visibilityFilter = useSelector((state) => state.todos.currentFilter);
+const Filters: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state) => state.todos.todoList);
+  const visibilityFilter = useAppSelector((state) => state.todos.currentFilter);
 
   if (!todos.length) {
     return null;
@@ -23,7 +24,7 @@ const Filters = () => {
     dispatch(removeCompletedTodo());
   };
 
-  const handleSetVisibilityFilter = (filter) => {
+  const handleSetVisibilityFilter = (filter: IFilterButton["value"]) => {
     dispatch(setVisibilityFilter(filter));
   };
 
@@ -34,10 +35,10 @@ const Filters = () => {
         <ul className="filters">
           {filterButtons.map((button) => (
             <FilterButton
-              key={button.id}
-              name={button.id}
-              isActive={visibilityFilter === button.filter}
-              onClick={() => handleSetVisibilityFilter(button.filter)}
+              key={button.name}
+              name={button.name}
+              isActive={visibilityFilter === button.value}
+              onClick={() => handleSetVisibilityFilter(button.value)}
             />
           ))}
         </ul>

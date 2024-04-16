@@ -1,19 +1,23 @@
-import './TodoItem.css';
-import { useDispatch } from 'react-redux';
-import { removeTodo, toggleTodo, editTodo } from '../../../store/todosSlice/todosSlice';
-import { useState } from 'react';
-import EditField from '../EditField/EditField';
-import { Todo } from '../../../types/types';
+import "./TodoItem.css";
+import { useAppDispatch } from "../../../store/store";
+import {
+  removeTodo,
+  toggleTodo,
+  editTodo,
+} from "../../../store/todosSlice/todosSlice";
+import { useState } from "react";
+import EditField from "../EditField/EditField";
+import { ITodo } from "../../../types/types";
 
-interface IProps {
-  todo: Todo;
+type TodoItemPropsType = {
+  todo: ITodo;
 }
 
-const TodoItem: React.FC<IProps> = props => {
-  const [editId, setEditId] = useState<number | null>(null);
-  const [editText, setEditText] = useState<string>('');
+const TodoItem: React.FC<TodoItemPropsType> = (props) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState<string>("");
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleRemoveTodo = () => {
     dispatch(removeTodo(props.todo.id));
@@ -25,11 +29,11 @@ const TodoItem: React.FC<IProps> = props => {
 
   const handleEditTodo = () => {
     if (!editText.trim()) {
-      setEditText('');
+      setEditText("");
     } else {
-      dispatch(editTodo({ id: editId as number, newText: editText }));
-      setEditId(null);
-      setEditText('');
+      dispatch(editTodo({ id: props.todo.id, newText: editText }));
+      setIsEditing(false);
+      setEditText("");
     }
   };
 
@@ -38,49 +42,54 @@ const TodoItem: React.FC<IProps> = props => {
   };
 
   const checkEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       return handleExit();
     }
-    if (e.key !== 'Enter') return;
+    if (e.key !== "Enter") return;
 
     handleEditTodo();
   };
 
   const handleExit = () => {
-    setEditId(null);
+    setIsEditing(false);
     setEditText(props.todo.text);
   };
 
   return (
-    <li className='todo-list__item item' id={props.todo.id?.toString()}>
-      {!editId ? (
-        <>
-          <input
-            type='checkbox'
-            className='item__checkbox'
-            onChange={handleCheckboxChange}
-            checked={props.todo.completed}
-          />
-          <label
-            className={`item__description ${props.todo.completed && 'item__description_checked'}`}
-            onDoubleClick={() => {
-              setEditId(props.todo.id);
-              setEditText(props.todo.text);
-            }}
-          >
-            {props.todo.text}
-          </label>
-          <button className='button item__delete-btn' onClick={handleRemoveTodo}>
-            ×
-          </button>
-        </>
-      ) : (
+    <li className="todo-list__item item" id={props.todo.id.toString()}>
+      {isEditing ? (
         <EditField
           value={editText}
           onChange={handleEditChange}
           onKeyDown={checkEnterKey}
           onBlur={handleExit}
         />
+      ) : (
+        <>
+          <input
+            type="checkbox"
+            className="item__checkbox"
+            onChange={handleCheckboxChange}
+            checked={props.todo.completed}
+          />
+          <label
+            className={`item__description ${
+              props.todo.completed && "item__description_checked"
+            }`}
+            onDoubleClick={() => {
+              setIsEditing(true);
+              setEditText(props.todo.text);
+            }}
+          >
+            {props.todo.text}
+          </label>
+          <button
+            className="button item__delete-btn"
+            onClick={handleRemoveTodo}
+          >
+            ×
+          </button>
+        </>
       )}
     </li>
   );
